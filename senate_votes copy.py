@@ -33,7 +33,10 @@ def get_vote_data(url):
     count_tags = ["yeas", "nays", "present", "absent"]
     for tag in count_tags:
         count_value = soup.find(tag)
-        count_data[tag] = count_value.get_text() if count_value.get_text() else "0"
+        if count_value:
+            count_data[tag] = count_value.get_text()
+        else:
+            count_data[tag] = count_value.get_text() if count_value else "0" if tag in ["present", "absent"] else ""
     vote_data["count"] = count_data
 
 
